@@ -7,21 +7,28 @@ const globalErrorHandler = require('./utils/globalError');
 const CustomError = require('./utils/CustomError');
 const cors = require('cors');
 
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: './config/.env' });
 }
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+const corsOptions = {
+    origin: `${process.env.FRONTEND_URL}`,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: [
+        'Content-Type',
+    ],
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
 require('./config/db');
 
 
-app.use('/api/product',productRouter);
-app.use('/api/brand',brandRouter);
-app.use('/api/category',categoryRouter);
+app.use('/api/product', productRouter);
+app.use('/api/brand', brandRouter);
+app.use('/api/category', categoryRouter);
 
 
 app.all("*", (req, res, next) => {
@@ -35,6 +42,6 @@ app.all("*", (req, res, next) => {
 app.use(globalErrorHandler);
 
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
 });
