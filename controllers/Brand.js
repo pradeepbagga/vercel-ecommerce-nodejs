@@ -1,4 +1,5 @@
 const { Brand } = require('../models/Brand');
+const asyncErrorHandler = require('../utils/asyncErrorHandler');
 
 exports.fetchBrands = async (req,res) => {
     try {
@@ -9,7 +10,7 @@ exports.fetchBrands = async (req,res) => {
     }
 }
 
-exports.createBrands = async (req,res) => {
+exports.createBrands = asyncErrorHandler(async (req, res, next) => {
     const brand = new Brand(req.body);
     try {
         const doc = await brand.save();
@@ -17,4 +18,4 @@ exports.createBrands = async (req,res) => {
     } catch (error) {
         return res.status(400).json(error);
     }
-}
+})

@@ -4,14 +4,14 @@ const { Schema } = mongoose;
 const brandSchema = new Schema({
     label: {
         type: String,
-        required: true, 
+        required: [true, "Label is required"], 
         unique: true
     },
     value: {
         type: String,
-        required: true, 
+        required: [true, "Value is required"], 
         unique: true
-    }
+    },
 });
 
 const virtual = brandSchema.virtual('id');
@@ -26,4 +26,4 @@ brandSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model("Brand",brandSchema);
+exports.Brand = mongoose.model("Brand",brandSchema);

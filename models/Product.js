@@ -4,16 +4,16 @@ const { Schema } = mongoose;
 const productSchema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, "Product title is required"],
         unique: true
     },
     description: {
         type: String,
-        required: true
+        required: [true, "Product description is required"],
     },
     price: {
         type: Number,
-        required: true,
+        required: [true, "Product price is required"],
         min: [1, "wrong minimum price"],
         max: [100000, "wrong maximum price"]
     },
@@ -34,19 +34,19 @@ const productSchema = new Schema({
     },
     brand: {
         type: String,
-        required: true
+        required: [true, "Brand is required"],
     },
     category: {
         type: String,
-        required: true
+        required: [true, "Category is required"],
     },
     thumbnail: {
         type: String,
-        required: true
+        required: [true, "Thumbnail is required"],
     },
     images: {
         type: [String],
-        required: true
+        required: [true, "Images are required"],
     },
     deleted: {
         type: Boolean,
