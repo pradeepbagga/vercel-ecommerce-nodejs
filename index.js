@@ -3,6 +3,7 @@ const app = express();
 const productRouter = require('./routes/Products');
 const brandRouter = require('./routes/Brand');
 const categoryRouter = require('./routes/Category');
+const authRouter = require('./routes/Auth');
 const globalErrorHandler = require('./utils/globalError');
 const CustomError = require('./utils/CustomError');
 const cors = require('cors');
@@ -26,9 +27,10 @@ app.use(express.json());
 require('./config/db');
 
 
-app.use('/api/product', productRouter);
-app.use('/api/brand', brandRouter);
-app.use('/api/category', categoryRouter);
+app.use('/api/v1/products', productRouter);
+app.use('/api/v1/brands', brandRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/auth', authRouter);
 
 
 app.all("*", (req, res, next) => {

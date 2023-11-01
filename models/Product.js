@@ -14,18 +14,19 @@ const productSchema = new Schema({
     price: {
         type: Number,
         required: [true, "Product price is required"],
-        min: [1, "wrong minimum price"],
-        max: [100000, "wrong maximum price"]
+        min: [1, "minimum price is 1"],
+        max: [100000, "maximum price is 100000"]
     },
     discountPercentage: {
         type: Number,
-        min: [0, "wrong minimum discount"],
-        max: [99, "wrong maximum discount"]
+        min: [0, "minimum discount is 0"],
+        max: [99, "maximum discount is 99"]
     },
     rating: {
         type: Number,
-        min: [1, "wrong minimum rating"],
-        max: [5, "wrong maximum rating"]
+        min: [1, "minimum rating is 1"],
+        max: [5, "maximum rating is 5"],
+        default:0
     },
     stock: {
         type: Number,
@@ -46,7 +47,7 @@ const productSchema = new Schema({
     },
     images: {
         type: [String],
-        required: [true, "Images are required"],
+        required: [true, "Minimum one image is required"],
     },
     deleted: {
         type: Boolean,

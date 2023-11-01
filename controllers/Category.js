@@ -11,3 +11,11 @@ exports.createCategory = async (req, res) => {
         res.status(400).json(error);
     }
 }
+exports.fetchCategory = async (req,res) => {
+    try {
+        const category = await Category.find({}).exec();
+        return res.status(201).json(category);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+}

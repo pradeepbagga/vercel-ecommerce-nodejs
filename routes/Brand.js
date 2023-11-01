@@ -5,6 +5,6 @@ const { fetchBrands, createBrands } = require('../controllers/Brand');
 const router = express.Router();
 
 router.get("/", fetchBrands);
-router.post("/create", createBrands);
+router.post("/", createBrands);
 
 module.exports = router;

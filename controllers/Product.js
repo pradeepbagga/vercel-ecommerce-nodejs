@@ -12,9 +12,9 @@ exports.createProduct = asyncErrorHandler(async (req, res) => {
     //     console.log('Error createProduct - ', error)
     //     res.status(400).json(error);
     // }
-})
+});
 
-exports.fetchAllProducts = async (req, res) => {
+exports.fetchAllProducts = asyncErrorHandler(async (req, res) => {
     console.log('QUERY - ', req.query);
 
     let query = Product.find({});
@@ -23,6 +23,10 @@ exports.fetchAllProducts = async (req, res) => {
     if (req.query.category) {
         query = query.find({ category: { $in: req.query.category.split(",") } })
         totalProducts = totalProducts.find({ category: { $in: req.query.category.split(",") } })
+    }
+    if (req.query.brand) {
+        query = query.find({ brand: { $in: req.query.brand.split(",") } })
+        totalProducts = totalProducts.find({ brand: { $in: req.query.brand.split(",") } })
     }
 
     if (req.query._sort && req.query._order) {
@@ -50,7 +54,7 @@ exports.fetchAllProducts = async (req, res) => {
         res.status(400).json(error)
     }
 
-}
+});
 
 exports.fetchProductById = asyncErrorHandler(async (req, res, next) => {
     const { id } = req.params;
@@ -64,4 +68,21 @@ exports.fetchProductById = asyncErrorHandler(async (req, res, next) => {
     }
 
     return res.status(200).json(product)
-})
+});
+
+exports.updateProduct = asyncErrorHandler(async (req, res, next) => {
+    const { id } = req.params;
+    let product;
+    try {
+        product = await Product.findById(id);
+    } catch (error) {
+        const err = new CustomError('Product is not found with this ID!', 404);
+        return next(err);
+    }
+    product = await Product.findByIdAndUpdate(id, req.body,
+        {
+            new: true,
+            runValidators: true
+        });
+    res.status(200).json(product);
+});
