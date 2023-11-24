@@ -39,6 +39,14 @@ const userSchema = new Schema({
         type: String,
         required: [true, "Please enter your name"]
     },
+    surname: {
+        type: String,
+        required: [true, "Please enter your surname"]
+    },
+    verified: {
+        type: Boolean,
+        default: false
+    }
 });
 
 userSchema.pre("save", async function(next){
